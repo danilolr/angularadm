@@ -6,8 +6,9 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LayoutModule } from '@angular/cdk/layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule,
-  MatFormFieldModule, MatInputModule, MatCardModule } from '@angular/material';
+import { MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule,   MatFormFieldModule, MatInputModule,
+  MatCardModule, MatSnackBarModule } from '@angular/material';
+import { AuthGuardService } from './services/auth-guard.service';
 import { MainNavComponent } from './pages/main-nav/main-nav.component';
 import { LoginComponent } from './pages/login/login.component';
 import { Page1Component } from './pages/page1/page1.component';
@@ -15,8 +16,8 @@ import { Page2Component } from './pages/page2/page2.component';
 
 const appRoutes: Routes = [
   { path: '', component: LoginComponent },
-  { path: 'page1',      component: Page1Component },
-  { path: 'page2',      component: Page2Component },
+  { path: 'page1',      component: Page1Component, canActivate: [AuthGuardService] },
+  { path: 'page2',      component: Page2Component, canActivate: [AuthGuardService] },
 ];
 
 @NgModule({
@@ -41,7 +42,8 @@ const appRoutes: Routes = [
     MatListModule,
     MatFormFieldModule,
     MatInputModule,
-    MatCardModule
+    MatCardModule,
+    MatSnackBarModule
   ],
   providers: [],
   bootstrap: [AppComponent]

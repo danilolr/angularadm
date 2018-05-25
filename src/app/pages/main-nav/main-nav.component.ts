@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
+import { BreakpointObserver } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
@@ -13,7 +13,7 @@ export class MainNavComponent {
 
   isHandset$ = false;
   isLoggedIn$: Observable<boolean>;
-  menu : any[];
+  menu: any[];
 
   constructor(private router: Router, private breakpointObserver: BreakpointObserver, private auth: AuthService) {
     this.isLoggedIn$ = this.auth.isLoggedIn;
@@ -21,10 +21,12 @@ export class MainNavComponent {
   }
 
   selected(option: any) {
-    if (option.path)
+    if (option.path) {
       this.router.navigate([option.path]);
-    if (option.logout)
+    }
+    if (option.logout) {
       this.auth.logout();
+    }
   }
 
 }

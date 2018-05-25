@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import {MatSnackBar} from '@angular/material';
 
 @Component({
   selector: 'app-login',
@@ -12,7 +13,7 @@ export class LoginComponent implements OnInit {
   form: FormGroup;
   private formSubmitAttempt: boolean;
 
-  constructor(private fb: FormBuilder, private authService: AuthService) { }
+  constructor(public snackBar: MatSnackBar, private fb: FormBuilder, private authService: AuthService) { }
 
   ngOnInit() {
     this.form = this.fb.group({
@@ -30,7 +31,9 @@ export class LoginComponent implements OnInit {
 
   onSubmit() {
     if (this.form.valid) {
-      this.authService.login(this.form.value.userName, this.form.value.password);
+      if (!this.authService.login(this.form.value.userName, this.form.value.password)) {
+        this.snackBar.open('Wrong user/password. User is admin and password x.', null, {duration: 1111});
+      }
     }
     this.formSubmitAttempt = true;
   }
